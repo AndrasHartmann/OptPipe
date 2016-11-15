@@ -1,0 +1,89 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Untitled Document.md</title><style></style></head><body id="preview">
+<h1><a id="OptPipe__a_Pipeline_for_Optimizing_Metabolic_Engineering_Targets_0"></a>OptPipe - a Pipeline for Optimizing Metabolic Engineering Targets</h1>
+<hr>
+<p>This software contains up-to date standardized methods for the optimization of metabolic engineering targets in genome-scale metabolic networks. This software was developed in the frame of the
+<a href="http://www.bachberry.eu/">BaCHBerry</a> project (European Union FP7- 613793)</p>
+<p>The code was written by Ana Vila Santa and András Hartmann under the supervision of Susana Vinga.</p>
+<h1><a id="License_7"></a>License</h1>
+<hr>
+<p>© 2015 - 2016 <a href="mailto:susanavinga@tecnico.ulisboa.pt">Susana Vinga</a>, <a href="mailto:andras.hartmann@gmail.com">András Hartmann</a> and <a href="mailto:vilasanta.ana@gmail.com">Ana Vila Santa</a></p>
+<p>OptPipe is a free software: you can redistribute it and/or modify
+it under the terms of the GNU Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This code is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Public License for more details.</p>
+<p>You should have received a copy of the GNU Public License
+along with this code. If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a></p>
+<h1><a id="Contents_24"></a>Contents</h1>
+<hr>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>common_functions</td>
+<td>:</td>
+<td>Folder for the common function shared by the methods</td>
+</tr>
+<tr>
+<td>examples</td>
+<td>:</td>
+<td>Folder for working examples including models</td>
+</tr>
+<tr>
+<td>external</td>
+<td>:</td>
+<td>Folder containing external libraries and toolboxes</td>
+</tr>
+<tr>
+<td>methods</td>
+<td>:</td>
+<td>Folder containing the methods</td>
+</tr>
+<tr>
+<td>installPipeline.m</td>
+<td>:</td>
+<td>Install script</td>
+</tr>
+<tr>
+<td>LICENSE.txt</td>
+<td>:</td>
+<td>License file (GPL v3)</td>
+</tr>
+<tr>
+<td>README.md</td>
+<td>:</td>
+<td>This file</td>
+</tr>
+</tbody>
+</table>
+<h1><a id="Install_37"></a>Install</h1>
+<hr>
+<h2><a id="Prerequisites_39"></a>Prerequisites</h2>
+<p>You will need:</p>
+<ul>
+<li><a href="http://www.mathworks.com/products/matlab">MATLAB</a> software for scientific computiong version 7.14 or later
+<ul>
+<li>Parallel toolbox (optional, but highly recommended in order to shorten running time)</li>
+</ul>
+</li>
+<li><a href="http://opencobra.github.io/cobratoolbox/">COBRA toolbox</a> from the openCOBRA project (an actual snapshot of is attached as external library)</li>
+<li><a href="http://sbml.org/Software/SBMLToolbox">SBML toolbox</a> (an actual snapshot of is attached as external library)</li>
+<li><a href="http://www.gurobi.com/">gurobi</a> optimization software installed for MATLAB (free for academic users)</li>
+</ul>
+<h1><a id="Installation_47"></a>Installation</h1>
+<p>Place the content of the package in a separate folder, start MATLAB.
+Within the MATLAB shell go to the init folder and run the init script</p>
+<pre><code class="language-matlab">&gt;&gt; cd <span class="hljs-string">'&lt;code folder&gt;/init'</span>
+&gt;&gt; initPipeline
+</code></pre>
+
+</body></html>

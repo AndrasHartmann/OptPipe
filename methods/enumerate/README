@@ -1,0 +1,14 @@
+Enumeration approach for optimization of for phenolic compound production in genome-scale metabolic network models.
+Written by Andras Hartmann <andras.hartmann@gmail.com>, based on the code of Armando Fernandes and the COBRA toolbox.
+
+Content
+---------
+
+enumerate_Cglutamicum.m     -> Run this script to create enumeration results for Malonyl-CoA
+delReaction.m               -> Simply deleting reactions
+LICENSE.txt                 -> License file (GPLv 3)
+model                       -> Directory containing the C. glutamicum model of [Zelle et al. 2015]
+myFBA.m                     -> Tested version of the Cobra Flux Balance Analysis function
+README                      -> This file
+robustKnockSolution.m       -> Returns robustknock solution (or optknock)
+testRxnDeletion.m           -> Recursively tests the deletion combinations
