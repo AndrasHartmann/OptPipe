@@ -25,15 +25,15 @@ along with this code. If not, see http://www.gnu.org/licenses/
 # Contents
 ---
 
-|                    | |                                                      |
-|--------------------|-|------------------------------------------------------|
-|common_functions    |:| Folder for the common function shared by the methods|
-|examples            |:| Folder for working examples including models|
-|external            |:| Folder containing external libraries and toolboxes|
-|methods             |:| Folder containing the methods|
-|installPipeline.m   |:| Install script|
-|LICENSE.txt         |:| License file (GPL v3)|
-|README.md           |:| This file|
+| Folder             |          Description                                |
+|--------------------|-----------------------------------------------------|
+|common_functions    | Folder for the common function shared by the methods|
+|examples            | Folder for working examples including models|
+|external            | Folder containing external libraries and toolboxes|
+|methods             | Folder containing the methods|
+|installPipeline.m   | Install script|
+|LICENSE.txt         | License file (GPL v3)|
+|README.md           | This file|
 
 # Install
 ---
