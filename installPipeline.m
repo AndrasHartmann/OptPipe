@@ -12,7 +12,7 @@ cobradir = [cwd '/external/opencobra'];
 %cd ([cobradir '/external/SBMLToolbox-4.1.0/toolbox']);
 %InstallSBMLToolbox
 
-cd(cobradir);
+addpath(cobradir);
 initCobraToolbox
 
 %external library for xls writing
