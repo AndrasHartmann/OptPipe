@@ -39,10 +39,12 @@ along with this code. If not, see http://www.gnu.org/licenses/
 ---
 ## Prerequisites
 You will need:
-- [MATLAB] software for scientific computiong version 7.14 or later
+- [MATLAB] software for scientific computing 
+    - Tested on version 7.14
+    - There are known compatibility issues with 2013b or later
     - Parallel toolbox (optional, but highly recommended in order to shorten running time)
-- [COBRA toolbox] from the openCOBRA project (an actual snapshot of is attached as external library)
-- [SBML toolbox] (an actual snapshot of is attached as external library)
+- [COBRA toolbox] from the openCOBRA project
+- [SBML toolbox]
 - [gurobi] optimization software installed for MATLAB (free for academic users)
 
 # Installation
