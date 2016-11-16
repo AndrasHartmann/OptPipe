@@ -5,15 +5,15 @@ function installPipeline()
 cwd = cd;
 
 %initializing COBRA
-%cobradir = [cwd '/external/cobratoolbox'];
+cobradir = [cwd '/external/opencobra'];
 
 %addpath([cobradir '/external/libSBML-5.11.4-matlab/']);
 
 %cd ([cobradir '/external/SBMLToolbox-4.1.0/toolbox']);
-%installSBMLToolbox
+%InstallSBMLToolbox
 
-%cd(cobradir);
-%initCobraToolbox
+cd(cobradir);
+initCobraToolbox
 
 %external library for xls writing
 addpath([cwd '/external/xlwrite']);
@@ -30,7 +30,6 @@ addpath([cwd '/external/Rankproduct']);
 %methods & common_functions
 addpath(genpath([cwd '/methods']));
 addpath([cwd '/common_functions']);
-
 
 %Checking parallel toolbox
 toolboxName ='Parallel Computing Toolbox'
