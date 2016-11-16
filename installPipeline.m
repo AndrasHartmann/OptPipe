@@ -23,9 +23,11 @@ Test_xlWrite
 
 %external RobustKnock library 
 addpath([cwd '/external/RobustKnock']);
-cd ([cwd '/external/RobustKnock']);
 
+%external Rankproduct library 
+addpath([cwd '/external/Rankproduct']);
 
+%methods & common_functions
 addpath(genpath([cwd '/methods']));
 addpath([cwd '/common_functions']);
 
