@@ -1,0 +1,3 @@
+[submodule "external/opencobra"]
+	path = external/opencobra
+	url = https://github.com/opencobra/cobratoolbox.git
