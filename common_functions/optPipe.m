@@ -86,7 +86,9 @@ for i=1:length(selectedRxnIDs)
 end
 
 %Export model
-writeCbModel(cobra_model,'sbml',strcat(result_dir, filesep, branchId, '_model'));
+%TODO
+% Uncomment! this if you would like to export the model, needs sbml binding
+%writeCbModel(cobra_model,'sbml',strcat(result_dir, filesep, branchId, '_model'));
 disp('model created in results folder');
 
 
@@ -107,20 +109,25 @@ else
     pause;
 end
 
-[num,optgene_results,raw] = xlsread(strcat(result_dir, filesep, 'optgene_', branchId, '.xlsx'));
+try
+    [num,optgene_results,raw] = xlsread(strcat(result_dir, filesep, 'optgene_', branchId, '.xlsx'));
 
-%if strfind(str,pattern)
-%Transform genes in reactions
-optgene_results_rxns= cell(0);
-for i=1:size(optgene_results,1)
-    [~, tmp]= findRxnsFromGenes(cobra_model, optgene_results(i,:),'listresults',true);
-    if ~isempty(tmp)
-        tmp = tmp(:,1);
-        optgene_results_rxns(end+1,1:length(tmp)) = tmp';
+    %if strfind(str,pattern)
+    %Transform genes in reactions
+    optgene_results_rxns= cell(0);
+    for i=1:size(optgene_results,1)
+        [~, tmp]= findRxnsFromGenes(cobra_model, optgene_results(i,:),'listresults',true);
+        if ~isempty(tmp)
+            tmp = tmp(:,1);
+            optgene_results_rxns(end+1,1:length(tmp)) = tmp';
+        end
     end
+    optgene_results_rxns(find(cellfun(@isempty,optgene_results_rxns))) = {''};
+    optgene_results = optgene_results_rxns;
+catch
+    disp('No KOs predictions by optgene')
+    optgene_results = cell(1,max_KOs);
 end
-optgene_results_rxns(find(cellfun(@isempty,optgene_results_rxns))) = {''};
-optgene_results = optgene_results_rxns;
 
 %% Enumeration methods
 
@@ -138,6 +145,7 @@ disp('---------Enumeration with OptKnock objective----------');
 filename = [result_dir filesep branchId '_optknock_enumeration.xls'];
 
 hasoptkonckenum = false;
+
 if exist(filename)
     try
         [~, screening_results_max] = xlsread(filename);
@@ -147,6 +155,8 @@ if exist(filename)
     catch me
     end
 end
+
+try
 
 if ~hasoptkonckenum
     % Setting the objective for target
@@ -162,6 +172,11 @@ if ~hasoptkonckenum
     screening_results_max = cobra_model.rxns(max_screening_results);
     xlwrite(filename, screening_results_max);
 end;
+
+catch
+    disp('No KOs predictions by optimistic prediction')
+    screening_results_max = cell(1,max_KOs);
+end
 
 
 %RobustKnock target: What is the minimum Target when Maximizing Biomass?
@@ -181,6 +196,8 @@ if exist(filename)
     end
 end
 
+try
+
 if ~hasrobustkonckenum
     % Setting the objective for target
     p = zeros(size(cobra_model.c));
@@ -194,6 +211,11 @@ if ~hasrobustkonckenum
     screening_results_min = cobra_model.rxns(min_screening_results);
 
     xlwrite(filename, screening_results_min);
+end
+
+catch
+    disp('No KOs predictions by pessimistic prediction')
+    screening_results_min = cell(1,max_KOs);
 end
 
 
@@ -233,13 +255,22 @@ screening_results_min(:,end+1)={'screening min'};
 results=vertcat(optknock_results,robokod_results,optgene_results,screening_results_max,screening_results_min);
 all_comb=results(:,1:max_KOs);
 
+%TODO should be sorted!
+%sorting all the rows
+%all_comb = sort(all_comb')';
+
 %remove empty rows
 a=sum(cellfun(@isempty,all_comb),2);
-all_comb(a==3,:)=[];
-results(a==3,:)=[];
+all_comb(a==max_KOs,:)=[];
+results(a==max_KOs,:)=[];
 
 %remove duplicate rows and register duplicates
-[~,idx]=unique(strcat(all_comb(:,1),all_comb(:,2),all_comb(:,3)) , 'rows');
+tmp = all_comb(:,1);
+for i = 2:max_KOs
+    tmp = strcat(tmp,all_comb(:,i));
+end
+
+[~,idx]=unique(tmp, 'rows');
 duplicate_i=setdiff(1:length(all_comb),idx);
 duplicates=all_comb(duplicate_i,:);
 all_comb=all_comb(idx,:);
@@ -291,7 +322,9 @@ best_distance=distance(choose_ind);
 
 %organize
 n=size(results,1);
-table_results={'','','','method','biomass','minimal target','maximal target','distance to Wt'};
+table_header(1:max_KOs) = {''};
+table_header = [ table_header {'method','biomass','minimal target','maximal target','distance to Wt'}];
+table_results = table_header;
 table_results(2:n+1,1:max_KOs+1)=results;
 table_results(2:n+1,max_KOs+2)=num2cell(biomass);
 table_results(2:n+1,max_KOs+3)=num2cell(target_min);
@@ -299,7 +332,7 @@ table_results(2:n+1,max_KOs+4)=num2cell(target_max);
 table_results(2:n+1,max_KOs+5)=num2cell(distance);
 
 n=size(best_results,1);
-table_best_results={'','','','method','biomass','minimal target','maximal target','distance to Wt'};
+table_best_results = table_header;
 table_best_results(2:n+1,1:max_KOs+1)=best_results;
 table_best_results(2:n+1,max_KOs+2)=num2cell(best_biomass);
 table_best_results(2:n+1,max_KOs+3)=num2cell(best_target_min);
@@ -315,19 +348,20 @@ fprintf('\n')
 [~,I] = sort(best_distance,'ascend');
 a=best_results(I,:);
 disp('Best candidates, taking into account adaptability:')
-disp(a(1:5,:))
+%disp(a(1:5,:))
+disp(a(1:end,:))
 
 fprintf('\n')
 [~,I] = sort(best_target_max,'descend');
 a=best_results(I,:);
 disp('Best candidates, taking into account maximal production:')
-disp(a(1:5,:))
+disp(a(1:end,:))
 
 fprintf('\n')
 [~,I] = sort(best_target_min,'descend');
 a=best_results(I,:);
 disp('Best candidates, taking into account minimal production:')
-disp(a(1:5,:))
+disp(a(1:end,:))
 
 
 fprintf('\n')
