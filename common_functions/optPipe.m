@@ -299,17 +299,29 @@ for i=1:length(results)
         comb,target_rxn,FVA);
 end
 
+%Rankproduct
+M = [biomass target_min target_max -distance]
+ranks = rankoptpipe(M);
+
+ranks.PG
+
+
 
 %filter out mutants that have max target=0 or biomass<0.5*maxBM
 remove_ind=find(target_max==0);  
-remove_ind=[remove_ind; find(biomass<0.5*maxBM)];
-%remove_ind=[remove_ind; find(biomass<0.1)];
+%remove_ind=[remove_ind; find(biomass<0.5*maxBM)];
+remove_ind=[remove_ind; find(biomass<0.1)];
 
 biomass(remove_ind)=[];
 target_min(remove_ind)=[];
 target_max(remove_ind)=[];
 distance(remove_ind)=[];
 results(remove_ind,:)=[]; 
+
+ranks.PG(remove_ind,:)=[]; 
+ranks.PE(remove_ind,:)=[]; 
+ranks.QG(remove_ind,:)=[]; 
+ranks.QE(remove_ind,:)=[]; 
 
 %choose only mutants that have minimal target >0
 choose_ind=find(target_min>0); 
@@ -319,17 +331,23 @@ best_biomass=biomass(choose_ind);
 best_target_min=target_min(choose_ind);
 best_target_max=target_max(choose_ind);
 best_distance=distance(choose_ind);
+%best_distance=distance(choose_ind);
 
 %organize
 n=size(results,1);
 table_header(1:max_KOs) = {''};
-table_header = [ table_header {'method','biomass','minimal target','maximal target','distance to Wt'}];
+table_header = [ table_header {'method','biomass','minimal target','maximal target','distance to Wt','PG','PE','QG','QE'}];
 table_results = table_header;
 table_results(2:n+1,1:max_KOs+1)=results;
 table_results(2:n+1,max_KOs+2)=num2cell(biomass);
 table_results(2:n+1,max_KOs+3)=num2cell(target_min);
 table_results(2:n+1,max_KOs+4)=num2cell(target_max);
 table_results(2:n+1,max_KOs+5)=num2cell(distance);
+
+table_results(2:n+1,max_KOs+6)=num2cell(ranks.PG);
+table_results(2:n+1,max_KOs+7)=num2cell(ranks.PE);
+table_results(2:n+1,max_KOs+8)=num2cell(ranks.QG);
+table_results(2:n+1,max_KOs+9)=num2cell(ranks.QE);
 
 n=size(best_results,1);
 table_best_results = table_header;
