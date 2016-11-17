@@ -23,7 +23,7 @@ sink = 'sink_naringenin';
 % parameter settings
 BM_rxn='biomass_a';
 target_rxn= sink;
-max_KOs=3;
+max_KOs=2;
 
 % currently only support gurobi solver
 changeCobraSolver('gurobi5');
