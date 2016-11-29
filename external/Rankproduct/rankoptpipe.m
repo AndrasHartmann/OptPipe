@@ -22,13 +22,50 @@ function P=rankoptpipe(M)
 
 [n,k]=size(M);   % n -  deletions, c - columns/criteria
 
+
+
+%check if all the parameters have enough different values to be used in the
+%RankProduct
+tol=10^-5; 
+parameters={'biomass ','Min prod ','Max prod ','Distance '};
+to_remove=std(M(:,1:4))<tol;
+M(:,to_remove)=[];
+disp(strcat('Parameters not used to rank the KOs: ',parameters{1,to_remove}));
+
+
 %sort each column descending - best (higher) on top! if some criteria is
 %better when lower (for example, distance to Wild-Type, pre-process with
 %symetric, e.g. M(:,4)=-M(:,4);
+%No need to flip here, has been done before calling this function
+%M(:,end)=-M(:,end)
 [Y,I]=sort(M,1,'descend');
 
 % get indicator I - where (position) are my deletions?
 [X,R]=sort(I,1,'ascend');    %gives directly the ranking R
+
+
+
+%%
+%Solve problem of repatead values: randomly assign ranks among equal values
+for col=1:size(M,2)
+    a=M(:,col);
+    %find repeated values
+    [C,ia,ic] = unique(a);
+    repeated_val=unique(a(setdiff(1:size(a,1),ia)));
+
+    %for each repeated value
+    for i=1:size(repeated_val,2)
+        %find all repetitions
+        indexes=find(a==repeated_val(i));
+        %find ranks of repeated values
+        r=R(indexes,col);
+        %assign ranks randomly
+        R(indexes,col)=r(randperm(length(r)));
+    end
+end
+%%
+
+
 
 
 RP = prod(R,2);

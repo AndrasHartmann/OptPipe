@@ -301,7 +301,22 @@ end
 
 %Rankproduct
 M = [biomass target_min target_max -distance]
-ranks = rankoptpipe(M);
+
+%repeat RankProduct 10 times to acount for randomness of the ranks
+%attributed to parameters with the same values (e.g. multiple double KOs with
+%biomass=0.5)
+all_Ranks=zeros(length(results),4,10);
+for i=1:10
+    temp_rank=rankoptpipe(M);
+    all_Ranks(:,:,i) = [temp_rank.PG,temp_rank.PE,temp_rank.QG,temp_rank.QE];
+end
+%average rank
+avg_Ranks=mean(all_Ranks,3);
+ranks.PG=avg_Ranks(:,1);
+ranks.PE=avg_Ranks(:,2);
+ranks.QG=avg_Ranks(:,3);
+ranks.QE=avg_Ranks(:,4);
+
 
 ranks.PG
 
