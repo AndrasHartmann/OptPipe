@@ -35,11 +35,18 @@ addpath([cwd '/common_functions']);
 toolboxName ='Parallel Computing Toolbox'
 v = ver;
 if any(strcmp(toolboxName, {v.Name}))&&license('test', 'distrib_computing_toolbox')
+   %For older version
+   %{
     if matlabpool('size') ~=0
         matlabpool close
     end    
     matlabpool
+    %}
+    poolobj = gcp('nocreate');
+    delete(poolobj);
+    parpool
 end
 
 cd(cwd);
 
+disp('OptPipe installed successfully.')
