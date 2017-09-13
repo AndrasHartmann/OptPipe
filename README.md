@@ -7,7 +7,7 @@ The code was written by Ana Vila Santa and András Hartmann under the supervisio
 
 # License
 ---
-© 2015 - 2016 [Susana Vinga], [András Hartmann] and [Ana Vila Santa]
+© 2015 - 2017 [Susana Vinga], [András Hartmann] and [Ana Vila Santa]
 
 OptPipe is a free software: you can redistribute it and/or modify
 it under the terms of the GNU Public License as published by
@@ -40,19 +40,23 @@ along with this code. If not, see http://www.gnu.org/licenses/
 ## Prerequisites
 You will need:
 - [MATLAB] software for scientific computing 
-    - Tested on version 7.14
-    - There are known compatibility issues with 2013b or later
+    - Tested on version 2015a and 2016b
+    - Compatibility issues might arise between gurobi and MATLAB 2017a
     - Parallel toolbox (optional, but highly recommended in order to shorten running time)
-- [COBRA toolbox] from the openCOBRA project
+- [COBRA toolbox] from the openCOBRA project (release 2.0)
 - [SBML toolbox]
 - [gurobi] optimization software installed for MATLAB (free for academic users)
 
 # Installation
 Place the content of the package in a separate folder, start MATLAB.
-Within the MATLAB shell go to the init folder and run the init script
+You can use git to download the current version from the repository
+```shell
+$ git clone --recursive https://github.com/AndrasHartmann/OptPipe.git
+```
+Within the MATLAB shell go to the code folder and run the install script
 ```matlab
->> cd '<code folder>/init'
->> initPipeline
+>> cd '<code folder>'
+>> installPipeline 
 ```
 
 [BaCHBerry]: <http://www.bachberry.eu/>
