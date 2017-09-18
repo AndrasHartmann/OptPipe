@@ -322,8 +322,10 @@ ranks.PG
 
 
 
-%filter out mutants that have max target=0 or biomass<0.5*maxBM
+%filter out mutants that have max target=0 or biomass<0.1
 remove_ind=find(target_max==0);  
+
+%This would be too restrictive
 %remove_ind=[remove_ind; find(biomass<0.5*maxBM)];
 remove_ind=[remove_ind; find(biomass<0.1)];
 
