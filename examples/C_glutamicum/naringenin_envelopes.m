@@ -23,6 +23,8 @@ productionEnvelope(optpipe_model, {'ddh'},'g--',sink,BM_rxn)
 
 title ('Naringenin with coumarate and constraints');
 legend('wild-type', 'sdhCAB-ddh', 'sdhCAB', 'ddh')
+xlabel('growth rate(h^{-1})');
+ylabel('McoA (mmol/gDW/h)');
 
 
 %% Malonyl-coA model
@@ -47,6 +49,8 @@ productionEnvelope(mal_model, {'mdh','glgA','aspA'},'m--',sink,BM_rxn)
 
 title ('Malonyl coA');
 legend('wild-type', 'sdhCAB-ddh', 'sdhCAB', 'ddh','mdh-glgA-aspA')
+xlabel('growth rate(h^{-1})');
+ylabel('McoA (mmol/gDW/h)');
 
 
 
